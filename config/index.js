@@ -23,21 +23,17 @@ module.exports = {
     },
     dev: {
         env: require('./dev.env'),
-        port: 8080,
+        port: 8081,
         autoOpenBrowser: true,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/api':{
-                target:'http://jsonplaceholder.typicode.com',
-                changeOrigin:true,
-                pathRewrite:{
-                    '/api':''
+            '/apis': {
+                target: 'http://180.76.57.168:8767',  // 接口域名
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                    '^/apis': ''   //需要rewrite重写的,
                 }
-            },
-            '/ms':{
-                target: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',
-                changeOrigin: true
             }
         },
         // CSS Sourcemaps off by default because relative paths are "buggy"

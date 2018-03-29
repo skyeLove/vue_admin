@@ -1,0 +1,12 @@
+html{
+    background: url("../../assets/img/logo.png") center center repeat!important;
+}
+.fillcontain{
+    width: 12.5rem;
+    height: 12.5rem;
+    background: #ccc;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform : translate(-50%,-50%);
+}
