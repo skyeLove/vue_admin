@@ -2,11 +2,28 @@ html{
     background: url("../../assets/img/logo.png") center center repeat!important;
 }
 .fillcontain{
-    width: 12.5rem;
-    height: 12.5rem;
-    background: #ccc;
+    background: #fff;
+    border-radius: 10px;
+    width: 30%;
+    min-width: 5rem;
+    max-width: 10rem;
     position: absolute;
     left: 50%;
     top:50%;
     transform : translate(-50%,-50%);
+}
+.imgPosition {
+	position: absolute;
+	top: 2px;
+	right: 0;
+}
+.login_page  {
+	padding: 0.66rem;
+}
+.text-center {
+    text-align: center;
+}
+.manage_tip {
+    line-height: 2rem;
+    font-size:0.75rem; 
 }

@@ -17,7 +17,12 @@ export default new Router({
                 {
                     path: '/Readme',
                     component: resolve => require(['../page/Readme.vue'], resolve)
-                }
+                },
+                 {
+                    name:"menuManage",
+                    path: '/menuManage',
+                    component: resolve => require(['../page/menuManage.vue'], resolve)
+        },
             ]
         },
         {
