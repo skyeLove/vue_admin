@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-    import * as api from "../apis/commonApis"
+    import * as api from "../common/commonApis"
     export default {
         name: "sidebar",
         components:{top},
@@ -32,10 +32,8 @@
             this.$http.get(api.MUNElIST)
                 .then((res) => {
                     if(res.data.status==200){
-                        console.log(this.$router);
-                        // this.muenList= res.data.data;
-                        res.data.data.sort((a,b)=>a.sort - b.sort)
-                        res.data.data.forEach((value)=>{
+                        // console.log(this.$router);
+                        res.data.data.sort((a,b)=>a.sort - b.sort).forEach((value)=>{
                             if(!value.parentId){
                                 this.muenList.push(value)
                                 value.children=[]
@@ -59,7 +57,17 @@
         methods:{
             getCollapse(){
                 this.showCollapse=!this.showCollapse
+            },
+            handleOpen(key, keyPath) {
+                this.handleClose()
+                // console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                // console.log(key, keyPath);
             }
+        },
+        filters:{
+
         }
     }
 </script>

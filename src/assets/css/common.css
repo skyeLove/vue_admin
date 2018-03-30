@@ -36,6 +36,9 @@ body {
 .pull-right{
   float: right;
 }
+.text-center {
+  text-align: center;
+}
 .el-menu-item{
   font-size: 0.29rem;
 }

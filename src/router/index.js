@@ -18,7 +18,12 @@ export default new Router({
                     name:'roleManage',
                     path: '/roleManage',
                     component: resolve => require(['../page/roleManage.vue'], resolve)
-                }
+                },
+                 {
+                    name:"menuManage",
+                    path: '/menuManage',
+                    component: resolve => require(['../page/menuManage.vue'], resolve)
+        },
             ]
         },
         {

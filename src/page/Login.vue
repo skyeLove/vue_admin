@@ -1,11 +1,11 @@
-<template>
+<template >
     <div class="login_page fillcontain">
         <transition name="form-fade" mode="in-out">
             <section class="form_contianer" >
-                <div class="manage_tip">
+                <div class="manage_tip text-center" >
                     <p>后台管理系统</p>
                 </div>
-                <el-form :model="loginForm" :rules="rules" ref="loginForm" @keyup.13="submitForm('loginForm')">
+                <el-form :model="loginForm" :rules="rules" ref="loginForm" >
                     <el-form-item prop="loginName">
                         <el-input v-model="loginForm.loginName" placeholder="用户名"></el-input>
                     </el-form-item>
@@ -13,11 +13,13 @@
                         <el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
                     </el-form-item>
                     <el-form-item prop="verifyCode">
-                        <el-input  type="text" placeholder="验证码" v-model="loginForm.verifyCode"></el-input>
-                        <img @click="getCode"  :src="'data:image/jpeg;base64,'+imgSrc"  class="verification">
+                        <el-input @keyup.13="submitForm('loginForm')"  type="text" placeholder="验证码" v-model="loginForm.verifyCode"></el-input>
+                        <div class='imgPosition'>
+                             <img @click="getCode"  :src="'data:image/jpeg;base64,'+imgSrc"  class="verification">
+                        </div>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button  type="primary" @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
+                    <el-form-item class='text-center'>
+                        <el-button  type="primary"  @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
                     </el-form-item>
                 </el-form>
             </section>
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-    import * as api from "../apis/commonApis"
+    import * as api from "../common/commonApis"
     import {mapState, mapActions} from 'vuex'
     export default {
         name: 'login',
