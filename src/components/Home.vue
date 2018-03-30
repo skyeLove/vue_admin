@@ -1,11 +1,11 @@
 <template>
-    <div class="fullHeight">
+    <div >
         <v-head></v-head>
-        <el-row class=" fullHeight" style="position: inherit;">
+        <el-row  style="position: inherit;">
             <el-col class="slider-fiex" :xs="4" :sm="4" :md="4" :lg="3" :xl="4"  >
                 <v-sidebar></v-sidebar>
             </el-col>
-            <el-col :xs="20" :sm="20" :md="20" :lg="21" :xl="20"  class="fullHeight content_fiex">
+            <el-col :xs="20" :sm="20" :md="20" :lg="21" :xl="20"  class=" content_fiex">
                 <keep-alive>
                     <router-view></router-view>
                 </keep-alive>
@@ -25,5 +25,7 @@
     }
 </script>
 <style scoped>
-
+    html{
+        background: #fff;
+    }
 </style>

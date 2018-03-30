@@ -13,7 +13,7 @@
                         <el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
                     </el-form-item>
                     <el-form-item prop="verifyCode">
-                        <el-input @keyup.13="submitForm('loginForm')"  type="text" placeholder="验证码" v-model="loginForm.verifyCode"></el-input>
+                        <el-input @keyup.enter.native="submitForm('loginForm')"  type="text" placeholder="验证码" v-model="loginForm.verifyCode"></el-input>
                         <div class='imgPosition'>
                              <img @click="getCode"  :src="'data:image/jpeg;base64,'+imgSrc"  class="verification">
                         </div>

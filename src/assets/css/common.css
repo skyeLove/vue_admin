@@ -50,30 +50,38 @@ body {
 }
 /*导航栏  菜单栏样式固定*/
 .slider-fiex {
-  position: fixed;
+  position: absolute;
   top:60px;
+    bottom:0;
   left: 0;
-    height: 100%;
   background-color:rgba(0,0,0,1)
 }
 .top-fiex {
   height: 60px;
-  position: fixed;
+  position: relative;
   left: 0;
   width: 100%;
   background-color:rgba(0,0,0,1)
 
 }
 .content_fiex {
-    position: fixed;
+    position: absolute;
     right: 0;
     top:60px;
+    padding:0.625rem;
+    background: #fff;
     word-wrap:break-word;
     font-size: 0.33rem;
     overflow: auto;
 }
-.el-table td, .el-table th.is-leaf{
+.pagination {
+   text-align: center;
+    margin-top:1.5rem;
+}
+.el-table td, .el-table th{
     font-size: 0.33rem;
+    padding:0.218rem 0;
+    word-wrap:break-word;
 }
 [v-cloak]{
     display: none;

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="roleManageClass">
       <el-table
           style="width: 100%"
           ref="multipleTable"
           stripe
-          :data="tableData3"
+          :data="roleDatas "
           tooltip-effect="dark"
           @selection-change="handleSelectionChange">
           <el-table-column
@@ -12,185 +12,96 @@
               width="55">
           </el-table-column>
           <el-table-column
-              label="日期"
-              fixed
-              width="120">
-              <template slot-scope="scope">{{ scope.row.date }}</template>
-          </el-table-column>
-          <el-table-column
-              prop="name"
-              label="姓名"
-              width="120">
-          </el-table-column>
-          <el-table-column
-              prop="address"
-              label="地址"
+              prop="roleName"
+              fixed="left"
+              label="角色名称"
               show-overflow-tooltip>
           </el-table-column>
           <el-table-column
-              fit="true"
-              prop="address"
-              label="地址"
+              prop="companyName"
+              label="所属机构"
               show-overflow-tooltip>
           </el-table-column>
           <el-table-column
-              prop="address"
-              label="地址"
+              prop="status"
+              label="是否是管理员"
               show-overflow-tooltip>
+              <template slot-scope="scope">
+                  <span style="margin-left: 10px">{{ scope.row.status==1?'是':'否'  }}</span>
+              </template>
           </el-table-column>
           <el-table-column
-              prop="address"
-              label="地址"
+              sortable
+              label="创建时间"
               show-overflow-tooltip>
+              <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row.createDate  }}</span>
+          </template>
           </el-table-column>
           <el-table-column
-              fixed="right"
-              prop="address"
-              label="地址"
+              sortable
+              prop="updateDate"
+              label="修改时间"
               show-overflow-tooltip>
           </el-table-column>
       </el-table>
+      <div class="pagination">
+          <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="model.pageNo"
+              :page-sizes="[10, 50, 80, 100]"
+              :page-size="model.pageRow"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="totalNumber">
+          </el-pagination>
+      </div>
   </div>
 </template>
-
 <script>
+    import * as api from '../common/commonApis'
     export default {
         name:'roleManage',
         data: function(){
             return{
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                },{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                },{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    province: '上海',
-                    city: '普陀区',
-                    zip: 200333
-                },],
+                roleDatas:[],
+                model:{
+                    pageNo: 1,
+                    pageRow:10,
+                    roleName:'',
+                    companyId:''
+                },
+                totalNumber:20,
                 multipleSelection: []
             }
         },
+        created(){
+            this.getRoleData()
+        },
         methods: {
-            toggleSelection(rows) {
-                if (rows) {
-                    rows.forEach(row => {
-                        this.$refs.multipleTable.toggleRowSelection(row);
-                    });
-                } else {
-                    this.$refs.multipleTable.clearSelection();
-                }
+            getRoleData(){
+                api.systemRoleList(JSON.stringify(this.model)).then(res=>{
+                    if(res.status==200) {
+                        this.totalNumber=res.data.total;
+                        return this.roleDatas=res.data.list;
+                    }
+                })
+            },
+            handleSizeChange(val) {
+                this.model.pageRow = val;
+                this.getRoleData()
+            },
+            handleCurrentChange(val) {
+                this.model.pageNo = val;
+                this.getRoleData()
             },
             handleSelectionChange(val) {
+                console.log(val);
                 this.multipleSelection = val;
             }
         }
     }
 </script>
-
 <style scoped>
 
 </style>

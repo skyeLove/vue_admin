@@ -4,7 +4,6 @@
    </div>
 </template>
 <script>
-    import * as api from "../common/commonApis"
     export default {
         name: "menuManage",
         data(){
@@ -13,7 +12,7 @@
             }
         },
         computed: {
-             
+
         },
         methods:{
             getCollapse(){
