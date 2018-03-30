@@ -15,8 +15,9 @@ export default new Router({
             component: resolve => require(['../components/Home.vue'], resolve),
             children:[
                 {
-                    path: '/Readme',
-                    component: resolve => require(['../page/Readme.vue'], resolve)
+                    name:'roleManage',
+                    path: '/roleManage',
+                    component: resolve => require(['../page/roleManage.vue'], resolve)
                 }
             ]
         },

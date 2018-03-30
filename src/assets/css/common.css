@@ -61,6 +61,17 @@ body {
   background-color:rgba(0,0,0,1)
 
 }
+.content_fiex {
+    position: fixed;
+    right: 0;
+    top:60px;
+    word-wrap:break-word;
+    font-size: 0.33rem;
+    overflow: auto;
+}
+.el-table td, .el-table th.is-leaf{
+    font-size: 0.33rem;
+}
 [v-cloak]{
     display: none;
 }
