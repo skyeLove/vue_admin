@@ -29,7 +29,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/apis': {
-                target: 'http://180.76.57.168:8767',  // 接口域名
+                target: '',  // 接口域名
                 changeOrigin: true,  //是否跨域
                 pathRewrite: {
                     '^/apis': ''   //需要rewrite重写的,

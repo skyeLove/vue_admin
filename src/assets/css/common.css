@@ -17,7 +17,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   height: 0px;
   background-color: #F5F5F5;
 }
-html {
+html,body {
   height: 100%;
   width: 100%;
   display: table;
@@ -52,7 +52,7 @@ body {
 .slider-fiex {
   position: absolute;
   top:60px;
-    bottom:0;
+ height: 100%;
   left: 0;
   background-color:rgba(0,0,0,1)
 }
@@ -68,7 +68,7 @@ body {
     position: absolute;
     right: 0;
     top:60px;
-    padding:0.625rem;
+    padding:0.1rem 0.4375rem 0;
     background: #fff;
     word-wrap:break-word;
     font-size: 0.33rem;
@@ -76,18 +76,60 @@ body {
 }
 .pagination {
    text-align: center;
-    margin-top:1.5rem;
+    margin-top:0.87rem;
 }
-.el-table td, .el-table th{
-    font-size: 0.33rem;
-    padding:0.218rem 0;
+.el-table td, .el-table th,.el-table td, .el-table th.is-leaf{
+    font-size: 0.291rem;
+    padding:0;
     word-wrap:break-word;
+    border:0;
+}
+.el-table .cell.el-tooltip{
+    line-height: 1.167rem;
+}
+.el-button,.el-cascader{
+    font-size: 0.416rem;
+    height: 0.937rem;
+    line-height: 0.937rem;
+}
+.el-button {
+    width: 2.08rem;
+    padding:0;
 }
 [v-cloak]{
     display: none;
 }
 .el-menu {
     border: 0 !important;
+}
+.content_title{
+    font-size: 0.416rem;
+    padding:0.395rem 0;
+    width: 100%;
+    display: inline-block;
+    border-bottom:1px dashed #e5e5e5;
+}
+.content_title i.fa{
+    color:#a3a3a3;
+    cursor: pointer;
+    margin-left:0.9rem;
+    font-size: 0.458rem;
+}
+.content_title i span{
+    margin-left:0.25rem;
+    font-size: 0.416rem;
+}
+i.edit{
+    color:#2d97e9;
+    cursor: pointer;
+}
+.content_title_title{
+    color:#2d97e9;
+
+}
+.content_search {
+    height: 1.791rem;
+    padding-top:0.5rem;
 }
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track

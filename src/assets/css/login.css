@@ -1,5 +1,5 @@
 html{
-    background: url("../../assets/img/logo.png") center center repeat!important;
+    background: url("../../assets/img/logo.png") center center repeat;
 }
 .fillcontain{
     background: #fff;
@@ -25,5 +25,5 @@ html{
 }
 .manage_tip {
     line-height: 2rem;
-    font-size:0.75rem; 
+    font-size:0.75rem;
 }

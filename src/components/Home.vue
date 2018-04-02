@@ -25,7 +25,5 @@
     }
 </script>
 <style scoped>
-    html{
-        background: #fff;
-    }
+    @import "../assets/css/home.css";
 </style>

@@ -16,12 +16,12 @@ export default new Router({
             children:[
                 {
                     name:'roleManage',
-                    path: '/roleManage',
+                    path: '/basic/roleManage',
                     component: resolve => require(['../page/roleManage.vue'], resolve)
                 },
                  {
                     name:"menuManage",
-                    path: '/menuManage',
+                    path: '/basic/menuManage',
                     component: resolve => require(['../page/menuManage.vue'], resolve)
         },
             ]
