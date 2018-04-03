@@ -8,7 +8,7 @@
             <div class="user-info">
                 <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
-                    <img  class="user-logo hidden-xs-only" src="../../static/img/img.jpg">
+                    <img  class="user-logo hidden-xs-only" :src="srcImg">
                     <span class="header_name">{{username}}</span>
                 </span>
                     <el-dropdown-menu slot="dropdown">
@@ -21,20 +21,38 @@
     </el-container>
 </template>
 <script>
+    import * as api from '../../common/commonApis'
     export default {
         name:'v-header',
         data() {
             return {
-                name: 'linxin'
+                username: '',
+                srcImg:''
             }
         },
         computed:{
-            username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
-            }
+
+        },
+        created(){
+            this.getUserData()
         },
         methods:{
+            getUserData(){
+                api.getUserById().then(res=>{
+                    if(res.status==200){
+                        this.username=res.data.userName
+                        this.srcImg='http://180.76.57.168:8080'+res.data.userImage
+                    }else {
+                        this.$message({
+                            type: 'warning',
+                            message: res.msg
+                        });
+                        localStorage.removeItem('Authorization')
+                        this.$router.push('/login');
+                    }
+
+                })
+            },
             handleCommand(command) {
                 if(command == 'loginout'){
                     localStorage.removeItem('Authorization')

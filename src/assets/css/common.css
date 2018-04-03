@@ -89,12 +89,7 @@ body {
 }
 .el-button,.el-cascader{
     font-size: 0.416rem;
-    height: 0.937rem;
-    line-height: 0.937rem;
-}
-.el-button {
-    width: 2.08rem;
-    padding:0;
+    display: block;
 }
 [v-cloak]{
     display: none;
@@ -130,6 +125,11 @@ i.edit{
 .content_search {
     height: 1.791rem;
     padding-top:0.5rem;
+}
+/*公共样式红星*/
+.star{
+    color: #FF0000;
+    margin-right:5px;
 }
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track

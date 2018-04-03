@@ -18,7 +18,6 @@ Vue.use(ElementUI);
 Vue.prototype.$http = axios
 Vue.axios = axios
 Vue.http = axios;
-
 new Vue({
     router,
     store,
