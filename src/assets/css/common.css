@@ -40,7 +40,7 @@ body {
   text-align: center;
 }
 .el-menu-item{
-  font-size: 0.29rem;
+  font-size: 0.333rem;
 }
 .el-submenu .el-menu-item{
   min-width: 0;
@@ -50,7 +50,7 @@ body {
 }
 /*导航栏  菜单栏样式固定*/
 .slider-fiex {
-  position: absolute;
+  position: fixed;
   top:60px;
  height: 100%;
   left: 0;
@@ -58,9 +58,10 @@ body {
 }
 .top-fiex {
   height: 60px;
-  position: relative;
+  position: fixed;
   left: 0;
   width: 100%;
+    z-index: 1000;
   background-color:rgba(0,0,0,1)
 
 }
@@ -79,7 +80,7 @@ body {
     margin-top:0.87rem;
 }
 .el-table td, .el-table th,.el-table td, .el-table th.is-leaf{
-    font-size: 0.291rem;
+    font-size: 0.333rem;
     padding:0;
     word-wrap:break-word;
     border:0;
@@ -89,6 +90,8 @@ body {
 }
 .el-button,.el-cascader{
     font-size: 0.416rem;
+}
+.el-cascader{
     display: block;
 }
 [v-cloak]{
@@ -125,6 +128,13 @@ i.edit{
 .content_search {
     height: 1.791rem;
     padding-top:0.5rem;
+}
+.title_fontSize {
+    font-size: 0.417rem;
+    color:#2d97e9
+}
+.el-form-item__label{
+    font-size: 0.333rem;
 }
 /*公共样式红星*/
 .star{

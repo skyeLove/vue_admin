@@ -90,7 +90,7 @@
 </template>
 <script>
     import * as api from '../../common/commonApis'
-    import companyTree from '../../components/TreeData/CompanyTree'
+    import companyTree from '../../components/selectData/CompanySelect'
     export default {
         name:'role-manage',
         components:{
@@ -170,7 +170,7 @@
                         cancelButtonText: '取消',
                         type: 'info'
                     }).then(() => {
-                        api.addRole(this.selectDatas.join(',')).then(res=>{
+                        api.deleteRole(this.selectDatas.join(',')).then(res=>{
                             if(res.status==200){
                                 this.$message({
                                     type: 'success',

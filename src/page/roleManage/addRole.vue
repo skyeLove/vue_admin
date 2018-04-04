@@ -32,7 +32,7 @@
 
 <script>
     import * as api from '../../common/commonApis'
-    import companyTree from '../../components/TreeData/CompanyTree'
+    import companyTree from '../../components/selectData/CompanySelect'
     import roleTree from '../../components/TreeData/roleTree'
     export default {
         name: "add-role",

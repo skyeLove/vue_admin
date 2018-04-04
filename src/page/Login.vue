@@ -84,7 +84,7 @@
                                     message: '登录成功'
                                 });
                                 loading.close();
-                                this.$router.push({name:'home'})
+                                this.$router.push({name:'role-manage'})
                                 //得到请求验证
                                 window.localStorage.removeItem('Authorization');
                                 window.localStorage.setItem('Authorization',res.data);

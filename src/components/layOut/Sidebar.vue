@@ -33,7 +33,8 @@
                 muenList:[],
                 dataLidts:[
                     {menuId:'0', menuName:'基础信息',model:'basic.roleManage',icon:'fa fa-align-justify',
-                        children:[{menuId:'01', menuName:'角色管理',model:'/basic/roleManage'}]}
+                        children:[{menuId:'01', menuName:'角色管理',model:'/basic/roleManage'},
+                            {menuId:'02', menuName:'用户管理',model:'/basic/userManage'}]}
                 ]
             }
         },

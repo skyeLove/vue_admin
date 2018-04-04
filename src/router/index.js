@@ -24,11 +24,16 @@ export default new Router({
                     path: '/basic/roleManage/addRole',
                     component: resolve => require(['../page/roleManage/addRole.vue'], resolve)
                 },
-                 {
-                    name:"menu-manage",
-                    path: '/basic/menuManage',
-                    component: resolve => require(['../page/menuManage.vue'], resolve)
-        },
+                {
+                    name:'user_manage',
+                    path: '/basic/userManage',
+                    component: resolve => require(['../page/userManage/userManage.vue'], resolve)
+                },
+                {
+                    name:'add-user',
+                    path: '/basic/userManage/addUser',
+                    component: resolve => require(['../page/userManage/addUser.vue'], resolve)
+                }
             ]
         },
         {
