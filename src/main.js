@@ -5,6 +5,7 @@ import store from "./common/store";
 import axios from './common/axios';
 import ElementUI from 'element-ui';
 import  * as filters from './filter';
+import base from './common/base'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';//element-ui 隐藏样式
 import './assets/css/common.css';//页面公共样式
@@ -14,6 +15,7 @@ import "babel-polyfill";
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
+Vue.use(base);
 Vue.use(ElementUI);
 Vue.prototype.$http = axios
 Vue.axios = axios

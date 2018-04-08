@@ -48,3 +48,11 @@ export const getUserList = params => { return axios.post('/apis/api/getUserList'
 export const delUser = params => { return axios.get('/apis/api/delUser?userId='+params).then(res => res.data); };
 
 export const addOrUpdateUser = params => { return axios.post('/apis/api/addOrUpdateUser',JSON.stringify(params)).then(res => res.data); };
+/**
+ * 机构管理
+ */
+export const addOrUpdateCompany = params => { return axios.post('/apis/api/addOrUpdateCompany',JSON.stringify(params)).then(res => res.data); };
+
+export const deleteCompany = params => { return axios.post('/apis/api/deleteCompany?companyId='+params).then(res => res.data); };
+
+export const getCompanyById = params => { return axios.post('/apis/api/getCompanyById?companyId='+params).then(res => res.data); };

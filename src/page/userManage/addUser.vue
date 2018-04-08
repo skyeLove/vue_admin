@@ -168,17 +168,6 @@
 
         },
         methods: {
-            //过滤树接口
-            forData(object,value){
-                value.children=[]
-                object.forEach((item)=>{
-                    if(value.id==item.pId){
-                        value.children.push(item)
-                        this.forData(object,item)
-                    }
-                })
-                if(value.children.length==0)  delete value.children;
-            },
             //从companySelect子组件传来参数
             getCompanySelect(data) {
                 if (data.length > 0) {
