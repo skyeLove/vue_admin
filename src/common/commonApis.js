@@ -19,6 +19,10 @@ export const loadCompanyTree = params => { return axios.post('/apis/api/loadComp
 export const loadRoleTree = params => { return axios.post('/apis/api/loadRoleTree?companyId='+params).then(res => res.data); };
 
 export const loadDeptTree = params => { return axios.post('/apis/api/loadDeptTree?companyId='+params).then(res => res.data); };
+
+export const getRoleMenuJson = params => { return axios.post('/apis/api/getRoleMenuJson').then(res => res.data); };
+
+export const getCompanyList = params => { return axios.post('/apis/api/getCompanyList').then(res => res.data); };
 /**
  * 获取用户信息
  */

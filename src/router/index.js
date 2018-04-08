@@ -33,7 +33,12 @@ export default new Router({
                     name:'add-user',
                     path: '/basic/userManage/addUser',
                     component: resolve => require(['../page/userManage/addUser.vue'], resolve)
-                }
+                },
+                 {
+                    name:'organization_manage',
+                    path: '/basic/organizationManage',
+                    component: resolve => require(['../page/organization/organization.vue'], resolve)
+                },
             ]
         },
         {

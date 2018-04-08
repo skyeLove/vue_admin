@@ -9,7 +9,8 @@
         </div>
         <el-row :gutter="8" class="content_search">
             <el-col :xs="14" :sm="6" :md="6" :lg="4" :xl="4">
-                <company-select @company-select="getCompanySelect"></company-select>
+                <company-select @company-select="getCompanySelect">
+                </company-select>
             </el-col>
             <el-col :sm="6" :md="6" :lg="4" :xl="4" class="hidden-xs-only">
                 <el-input
@@ -30,7 +31,16 @@
                 </el-select>
             </el-col>
             <el-col :xs="14" :sm="6" :md="6" :lg="4" :xl="4">
-                <role-select @role-select="getRoleSelect"></role-select>
+                <el-cascader
+                    @focus="getFocus(roleSelect)"
+                    clearabl
+                    placeholder="请输入所属角色"
+                    size="small"
+                    change-on-select
+                    :options="roleSelect"
+                    :show-all-levels="false"
+                    :props="{label:'name',value:'id'}">
+                    </el-cascader>
             </el-col>
             <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
                 <el-button @click="searchResult"  size="small" type="primary" icon="el-icon-search">查询</el-button>
@@ -123,15 +133,15 @@
 <script>
     import * as api from '../../common/commonApis'
     import companySelect from '../../components/selectData/CompanySelect'
-    import roleSelect from '../../components/selectData/roleSelect'
     export default {
         name:'user-manage',
         components:{
-            companySelect,roleSelect
+            companySelect
         },
         data: function(){
             return{
                 userDatas:[],
+                roleSelect:[],
                 options:[{value: '1',
                     label: '启用'},
                     {value: '0',
@@ -153,6 +163,17 @@
             this.getUserData()
         },
         methods: {
+             //过滤树接口
+            forData(object,value){
+                value.children=[]
+                object.forEach((item)=>{
+                    if(value.id==item.pId){
+                        value.children.push(item)
+                        this.forData(object,item)
+                    }
+                })
+                if(value.children.length==0)  delete value.children;
+            },
             //从companySelect子组件传来参数
             getCompanySelect(data){
                 if(data.length>0){
@@ -160,13 +181,29 @@
                 }else {
                     this.model.companyId=''
                 }
+                this.getRoleSelect(this.model.companyId)
             },
             //从roleSelect子组件传来参数
             getRoleSelect(data){
-                if(data.length>0){
-                    this.model.roleId=data[data.length-1].toString();
-                }else {
-                    this.model.roleId=''
+                this.roleSelect=[]
+                api.loadRoleTree(data).then(res=>{
+                    if(res.status==200) {
+                        res.data.forEach((value)=>{
+                            if(value.pId==data){
+                                this.roleSelect.push(value)
+                                this.forData(res.data,value)
+                            }
+                        })
+                        return this.roleSelect
+                    }
+                })
+            },
+             getFocus(data){
+                if(data.length==0){
+                    this.$message({
+                        type: 'warning',
+                        message: '请先选择所属机构！'
+                    });
                 }
             },
             //获取用户 管理列表

@@ -2,7 +2,7 @@
     <div>
         <el-tree
             :props="props"
-            :data="roleData"
+            :data="menuData"
             show-checkbox
             node-key="id"
             accordion
@@ -14,10 +14,10 @@
 <script>
     import * as api from '../../common/commonApis'
     export default {
-        name: "role-tree",
+        name: "menu-tree",
         data(){
             return{
-                roleData:[],
+                menuData:[],
                 props:{
                     label: 'name',
                     children: 'children'
@@ -29,17 +29,19 @@
         },
         methods: {
             handleCheckChange(data,checkeds) {
-                this.$emit('role-select',checkeds)
+                console.log(data)
+                   console.log(checkeds)
+                this.$emit('menu-select',checkeds)
             },
             loadNode() {
-                api.loadRoleTree('').then(res=>{
+                api.getRoleMenuJson().then(res=>{
                     res.data.forEach((value)=>{
                         if(!value.pId){
-                            this.roleData.push(value)
+                            this.menuData.push(value)
                             this.forData(res.data,value)
                         }
                     })
-                    return this.roleData
+                    return this.menuData
                 })
             },
             //过滤树接口

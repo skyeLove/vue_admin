@@ -3,7 +3,8 @@
         <div class="content_title">
             <span class="content_title_title pull-left">新增（标*的为必填项）</span>
         </div>
-        <el-row :gutter="20" style="padding-top:1.125rem;">
+          <el-form label-position='top' :model="addForm" :rules="rules" ref="addForm" label-width="120px" class="demo-ruleForm">
+             <el-row :gutter="20" style="padding-top:1.125rem;">
             <el-col :xs="8" :sm="6" :md="6" :lg="8" :xl="8">
                <div class="userImgContent">
                    <img class="userImg" src="../../../static/img/img.jpg"/>
@@ -11,7 +12,6 @@
                </div>
             </el-col>
             <el-col :xs="14" :sm="16" :md="16" :lg="14" :xl="14" >
-                <el-form label-position='top' :model="addForm" :rules="rules" ref="addForm" label-width="120px" class="demo-ruleForm">
                     <div class="title_fontSize">账户资料</div>
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -110,9 +110,9 @@
                         <el-button class="pull-left" type="primary" @click="submitForm('addForm')">提交</el-button>
                         <el-button class="pull-left" @click="cancle()">取消</el-button>
                     </el-form-item>
-                </el-form>
             </el-col>
         </el-row>
+         </el-form>
     </div>
 </template>
 
@@ -136,7 +136,8 @@
                     userName:'',
                     idCardNo:'',
                     telephone:'',
-                    mobilePhone:''
+                    mobilePhone:'',
+                    userImage:''
                 },
                 rules: {
                     loginName: [
@@ -200,7 +201,6 @@
                                 this.forData(res.data,value)
                             }
                         })
-                        console.log(this.roleSelect);
                         return this.roleSelect
                     }
                 })

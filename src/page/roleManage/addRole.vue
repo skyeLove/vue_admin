@@ -18,7 +18,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item prop="ckIds" label="配置菜单权限" >
-                        <role-tree @role-select="getRoleTree"></role-tree>
+                        <menu-tree @menu-select="getMenuTree"></menu-tree>
                     </el-form-item>
                     <el-form-item>
                         <el-button class="pull-left" type="primary" @click="submitForm('addForm')">提交</el-button>
@@ -33,7 +33,7 @@
 <script>
     import * as api from '../../common/commonApis'
     import companyTree from '../../components/selectData/CompanySelect'
-    import roleTree from '../../components/TreeData/roleTree'
+    import menuTree from '../../components/TreeData/menuTree'
     export default {
         name: "add-role",
         data(){
@@ -58,7 +58,7 @@
             }
         },
         components:{
-            companyTree,roleTree
+            companyTree,menuTree
         },
         methods:{
             //从 companyTree 子组件传来参数
@@ -70,8 +70,14 @@
                 }
             },
             //从roleTree子组件传来参数
-            getRoleTree(data){
+            getMenuTree(data){
+                this.addForm.ckStatus=''
                 this.addForm.ckIds=data.checkedKeys.join(',')
+                data.checkedKeys.forEach(value=>{
+                    this.addForm.ckStatus+="1,"
+                })
+                this.addForm.ckStatus.slice(0,this.addForm.ckStatus.length-1)
+                console.log(this.addForm.ckStatus)
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
