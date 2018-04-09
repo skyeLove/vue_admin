@@ -5,6 +5,7 @@
             clearable
             placeholder="请输入所属机构"
             size="small"
+            v-model="tempValue"
             change-on-select
             :options="companyTree"
             :show-all-levels="false"
@@ -19,11 +20,18 @@
         name: "company-tree",
         data(){
             return{
-                companyTree:[]
+                companyTree:[],
+                tempValue:[]
             }
         },
+        props:[ "companyModel"],
         created(){
            this.initData()
+        },
+        watch:{
+            companyModel(val){
+
+            }
         },
         methods: {
             initData(){

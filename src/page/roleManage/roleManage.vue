@@ -65,14 +65,16 @@
               label="创建时间"
               show-overflow-tooltip>
               <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.createDate  }}</span>
+              <span>{{ scope.row.createDate |dateFormat }}</span>
           </template>
           </el-table-column>
           <el-table-column
               sortable
-              prop="updateDate"
               label="修改时间"
               show-overflow-tooltip>
+              <template slot-scope="scope">
+                  <span>{{ scope.row.updateDate |dateFormat }}</span>
+              </template>
           </el-table-column>
       </el-table>
       <div class="pagination">

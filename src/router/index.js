@@ -15,29 +15,34 @@ export default new Router({
             component: resolve => require(['../components/layOut/Home.vue'], resolve),
             children:[
                 {
-                    name:'role-manage',
+                    name:'role-manage',//角色管理
                     path: '/basic/roleManage',
                     component: resolve => require(['../page/roleManage/roleManage.vue'], resolve)
                 },
                 {
-                    name:'add-role',
+                    name:'add-role',//角色添加
                     path: '/basic/roleManage/addRole',
                     component: resolve => require(['../page/roleManage/addRole.vue'], resolve)
                 },
                 {
-                    name:'user_manage',
+                    name:'user-manage',//用户管理
                     path: '/basic/userManage',
                     component: resolve => require(['../page/userManage/userManage.vue'], resolve)
                 },
                 {
-                    name:'add-user',
+                    name:'add-user',//用户添加
                     path: '/basic/userManage/addUser',
                     component: resolve => require(['../page/userManage/addUser.vue'], resolve)
                 },
                  {
-                    name:'organization_manage',
+                    name:'organization-manage',//机构管理
                     path: '/basic/organizationManage',
                     component: resolve => require(['../page/organization/organization.vue'], resolve)
+                },
+                {
+                    name:'depart-manage',//部门管理
+                    path: '/basic/departManage',
+                    component: resolve => require(['../page/departManage/departManage.vue'], resolve)
                 },
             ]
         },

@@ -9,13 +9,14 @@ const dateFormat=(dateTime,type)=>{
         if (dateTime==null || dateTime=='' || dateTime=="undefined"){
             return dateTime;
         }
-        var formatDate = new Date(dateTime);
-        var yy = formatDate.getFullYear();
-        var mm = formatDate.getMonth() + 1;
-        var dd = formatDate.getDate();
-        var hh = formatDate.getHours();
-        var min = formatDate.getMinutes();
-        var ss=formatDate.getSeconds();
+        let formatDate = new Date(dateTime);
+        let formatTime=''
+        let yy = formatDate.getFullYear();
+        let mm = formatDate.getMonth() + 1;
+        let dd = formatDate.getDate();
+        let hh = formatDate.getHours();
+        let min = formatDate.getMinutes();
+        let ss=formatDate.getSeconds();
         if (mm >= 1 && mm <= 9) {
             mm = "0" + mm;
         }

@@ -113,7 +113,7 @@
                 label="最后登录时间"
                 show-overflow-tooltip>
                 <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.createDate  }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.createDate |dateFormat }}</span>
                 </template>
             </el-table-column>
         </el-table>

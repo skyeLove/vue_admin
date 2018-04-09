@@ -10,13 +10,16 @@ const store = new Vuex.Store({
   state: {
     adminInfo: {
       avatar: ''
-    }
+    },
+      optionsPid:'',
+      optionsCid:'',
+      optionsAid:'',
   },
   mutations: {
     //只能同步的函数
     saveAdminInfo(state, adminInfo){
       state.adminInfo = adminInfo;
-    },
+    }
   },
   actions: {
     getAdminData({commit}){

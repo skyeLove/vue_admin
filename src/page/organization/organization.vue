@@ -11,9 +11,9 @@
                 :props="defaultProps"
                 @node-drag-end="handleDragEnd"
                 draggable>
-                  <span class="custom-tree-node" slot-scope="{ node, data }">
+                  <span  class="custom-tree-node" slot-scope="{ node, data }">
                       <span style="flex: 1">{{ node.label }}</span>
-                        <span class="pull-right">
+                        <span class="pull-right" v-if="data.id!=0">
                              <el-tooltip class="item" effect="dark" content="添加" placement="top">
                                 <el-button
                                     class="fa fa-plus"
@@ -51,7 +51,8 @@
             </el-tree>
         </div>
 
-        <el-dialog title="添加机构" :visible.sync="dialogFormVisible">
+
+        <el-dialog :title="tempTitle+'机构'" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="Form" :model="Form" :label-width="formLabelWidth">
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -61,9 +62,9 @@
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="客户类型:" >
-                            <el-select v-model="Form.type" placeholder="请输入客户类型">
-                                <el-option label="公司" value="0"></el-option>
-                                <el-option label="部门" value="1"></el-option>
+                            <el-select v-model="Form.type" placeholder="请选择客户类型">
+                                <el-option label="公司" value="1"></el-option>
+                                <el-option label="部门" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -71,31 +72,67 @@
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="联系人:" >
-                            <el-input v-model="Form.linkman"></el-input>
+                            <el-input placeholder="请输入联系人" v-model="Form.linkman"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="手机号:">
-                            <el-input v-model="Form.telephone"></el-input>
+                            <el-input placeholder="请输入手机号" v-model="Form.telephone"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="省:">
-                            <el-input v-model="Form.pid"></el-input>
+                            <el-select @change="getCid(Form.pid)"   v-model="Form.pid" clearable  placeholder="请选择省">
+                                <el-option
+                                    :key="0"
+                                    label="请选择"
+                                    :value="0">
+                                </el-option>
+                                <el-option
+                                    v-for="item in optionsPid"
+                                    :key="item.regionId"
+                                    :label="item.regionName"
+                                    :value="item.regionId">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="市:">
-                            <el-input v-model="Form.cid"></el-input>
+                            <el-select  @change="getAid(Form.cid)"  v-model="Form.cid" clearable  placeholder="请选择市">
+                                <el-option
+                                    :key="0"
+                                    label="请选择"
+                                    :value="0">
+                                </el-option>
+                                <el-option
+                                    v-for="item in optionsCid"
+                                    :key="item.regionId"
+                                    :label="item.regionName"
+                                    :value="item.regionId">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                         <el-form-item label="区:" >
-                            <el-input v-model="Form.aid"></el-input>
+                            <el-select  v-model="Form.aid" clearable  placeholder="请选择区">
+                                <el-option
+                                    :key="0"
+                                    label="请选择"
+                                    :value="0">
+                                </el-option>
+                                <el-option
+                                    v-for="item in optionsAid"
+                                    :key="item.regionId"
+                                    :label="item.regionName"
+                                    :value="item.regionId">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -124,6 +161,9 @@
         data: function(){
             return{
                     dataList:[],
+                    optionsPid:'',
+                    optionsCid:'',
+                    optionsAid:'',
                     tempTitle:'',//1是添加title  2是编辑title
                     Form: {
                         companyName: '',
@@ -151,34 +191,53 @@
             }
         },
         created() {
-            this.getData()
+            this.getData();
+            //初始展示省
+            this.getProCityDis('optionsPid','grade=2&regionId=')
         },
         methods: {
-            handleDragEnd(draggingNode, dropNode, dropType, ev) {
-                this.Form={}
-                this.Form.parentId=dropNode.data.id;
-                this.Form.companyId=draggingNode.data.id;
-                api.addOrUpdateCompany(this.Form).then(res => {
-                    if(res.status==200){
-                        this.$message({
-                            type: 'success',
-                            message: '拖拽成功'
-                        });
-                    }else {
-                        this.$message({
-                            type: 'warning',
-                            message: res.msg
-                        });
-                    }
-                    this.getData()
+            //省市区三级联动接口
+            getProCityDis(array,url){
+                api.getProCityDis(url).then(res => {
+                    this[array]=res.data
                 })
+            },
+            //得到市
+            getCid(item){
+                this.getProCityDis('optionsCid','grade=3&regionId='+item)
+            },
+            //得到区
+            getAid(item){
+                this.getProCityDis('optionsAid','grade=4&regionId='+item)
+            },
+            handleDragEnd(draggingNode, dropNode, dropType, ev) {
+                if(dropNode.data.id!=draggingNode.data.id){
+                    this.Form={}
+                    this.Form.parentId=dropNode.data.id;
+                    this.Form.companyId=draggingNode.data.id;
+                    api.addOrUpdateCompany(this.Form).then(res => {
+                        if(res.status==200){
+                            this.$message({
+                                type: 'success',
+                                message: '拖拽成功'
+                            });
+                        }else {
+                            this.$message({
+                                type: 'warning',
+                                message: res.msg
+                            });
+                        }
+                        this.getData()
+                    })
+                }
+
             },
             //获取用户 管理列表
             getData(){
                  api.getCompanyList().then(res=>{
                     if(res.status==200){
-                        this.dataList=[]
-                        this.dataList.push(res.data)
+                        this.dataList=[{name:'ROOT',id:0,children:[]}]
+                        this.dataList[0].children.push(res.data)
                     }else {
                         this.$message({
                         type: 'warning',
@@ -188,7 +247,7 @@
                 })
             },
             detail(data){
-                console.log(data);
+                // console.log(data);
             },
             remove(node,data){
                 this.$confirm('您确认删除机构名称为: '+data.name,' 是否继续?', '提示', {
@@ -216,7 +275,7 @@
                 //清空数据 展开弹框
                 this.Form={}
                 //赋值弹框为添加
-                this.tempTitle='添加成功！'
+                this.tempTitle='添加'
                 this.dialogFormVisible=true;
                 this.Form.parentId=data.id;
             },
@@ -227,7 +286,7 @@
                             if(res.status==200){
                                 this.$message({
                                     type: 'success',
-                                    message: this.tempTitle
+                                    message: this.tempTitle+'成功！'
                                 });
                                 this.dialogFormVisible=false;
                             }else {
@@ -243,13 +302,14 @@
             },
             //编辑
             edit(data){
-                console.log(data);
                 this.Form={}
                 //赋值弹框为编辑
-                this.tempTitle='编辑成功！'
+                this.tempTitle='编辑'
                 api.getCompanyById(data.id).then(res => {
                     if(res.status==200){
                         this.dialogFormVisible=true;
+                        this.getCid(res.data.pid)
+                        this.getAid(res.data.cid)
                         this.Form={
                             companyName: res.data.companyName,
                             remark:res.data.remark,
@@ -269,6 +329,9 @@
                     }
                 })
             }
+        },
+        watch:{
+
         }
     }
 </script>

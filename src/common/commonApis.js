@@ -22,7 +22,10 @@ export const loadDeptTree = params => { return axios.post('/apis/api/loadDeptTre
 
 export const getRoleMenuJson = params => { return axios.post('/apis/api/getRoleMenuJson').then(res => res.data); };
 
-export const getCompanyList = params => { return axios.post('/apis/api/getCompanyList').then(res => res.data); };
+/**
+ * 公共接口 省市区
+ */
+export const getProCityDis = params => { return axios.get('/apis/api/getProCityDis?'+params).then(res => res.data); };
 /**
  * 获取用户信息
  */
@@ -56,3 +59,15 @@ export const addOrUpdateCompany = params => { return axios.post('/apis/api/addOr
 export const deleteCompany = params => { return axios.post('/apis/api/deleteCompany?companyId='+params).then(res => res.data); };
 
 export const getCompanyById = params => { return axios.post('/apis/api/getCompanyById?companyId='+params).then(res => res.data); };
+
+export const getCompanyList = params => { return axios.post('/apis/api/getCompanyList').then(res => res.data); };
+/**
+ * 部门管理
+ */
+export const getDeptList = params => { return axios.post('/apis/api/getDeptList').then(res => res.data); };
+
+export const addOrUpdateDept = params => { return axios.post('/apis/api/addOrUpdateDept',JSON.stringify(params)).then(res => res.data); };
+
+export const deleteDept = params => { return axios.post('/apis/api/deleteDept?deptId='+params).then(res => res.data); };
+
+export const getDeptById = params => { return axios.post('/apis/api/getDeptById?deptId='+params).then(res => res.data); };
