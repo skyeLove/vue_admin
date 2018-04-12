@@ -87,8 +87,7 @@
                                 this.$router.push({name:'role-manage'})
                                 //得到请求验证
                                 window.localStorage.removeItem('Authorization');
-                                window.localStorage.setItem('Authorization',res.data);
-                                console.log(window.localStorage.getItem('Authorization'));
+                                this.setlocalStorage('Authorization',res.data)
                             }else {
                                 loading.close();
                                 this.$message({

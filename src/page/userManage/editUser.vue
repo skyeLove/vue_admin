@@ -1,35 +1,38 @@
 <template>
     <div>
         <div class="content_title">
-            <span class="content_title_title pull-left">新增（标*的为必填项）</span>
+            <span class="content_title_title pull-left">修改（标*的为必填项）</span>
         </div>
-          <el-form label-position='top' :model="addForm" :rules="rules" ref="addForm" label-width="120px" class="demo-ruleForm">
-             <el-row :gutter="20" style="padding-top:1.125rem;">
-            <el-col :xs="8" :sm="6" :md="6" :lg="8" :xl="8">
-               <div class="userImgContent">
-                   <el-upload
-                       class=""
-                       action="http://180.76.57.168:8767/modules/upload"
-                       :show-file-list="false"
-                       :on-success="handleAvatarSuccess"
-                       :before-upload="beforeAvatarUpload">
-                       <img v-if="imageUrl" :src="imageUrl" class="avatar userImg">
-                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                   </el-upload>
-                  <div class="clickImg">点击上传图片</div>
-               </div>
-            </el-col>
-            <el-col :xs="14" :sm="16" :md="16" :lg="14" :xl="14" >
+        <el-form label-position='top' :model="editForm" :rules="rules" ref="editForm" label-width="120px" class="demo-ruleForm">
+            <el-row :gutter="20" style="padding-top:1.125rem;">
+                <el-col :xs="8" :sm="6" :md="6" :lg="8" :xl="8">
+                    <div class="userImgContent">
+                        <el-upload
+                            class=""
+                            action="http://180.76.57.168:8767/modules/upload/"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar userImg">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                        <div class="clickImg">点击上传图片</div>
+                    </div>
+                </el-col>
+                <el-col :xs="14" :sm="16" :md="16" :lg="14" :xl="14" >
                     <div class="title_fontSize">账户资料</div>
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                             <el-form-item label="用户名" prop="loginName">
-                                <el-input placeholder="请输入用户名"  size="small" v-model="addForm.loginName"></el-input>
+                                <el-input placeholder="请输入用户名"  size="small" v-model="editForm.loginName"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                            <el-form-item label="密码" prop="password">
-                                <el-input type="password" placeholder="请输入密码" size="small" v-model="addForm.password"></el-input>
+                            <el-form-item prop="status"  label="是否启用" >
+                                <el-select  size="small" v-model="editForm.status" clearable  placeholder="请选择是否启用">
+                                    <el-option label="禁用" :value="0"></el-option>
+                                    <el-option label="启用" :value="1"></el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -72,57 +75,46 @@
                             </el-form-item>
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                                <el-form-item prop="adminType"  label="是否是管理员" >
-                                    <el-select  size="small" v-model="addForm.adminType" clearable  placeholder="请选择是否是管理员">
-                                        <el-option label="否" value="0"></el-option>
-                                        <el-option label="是" value="1"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                                <el-form-item prop="status"  label="是否启用" >
-                                    <el-select  size="small" v-model="addForm.status" clearable  placeholder="请选择是否启用">
-                                        <el-option label="禁用" value="0"></el-option>
-                                        <el-option label="启用" value="1"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-
+                            <el-form-item prop="adminType"  label="是否是管理员" >
+                                <el-select  size="small" v-model="editForm.adminType" clearable  placeholder="请选择是否是管理员">
+                                    <el-option label="否" :value="0"></el-option>
+                                    <el-option label="是" :value="1"></el-option>
+                                </el-select>
+                            </el-form-item>
                         </el-col>
                     </el-row>
                     <div class="title_fontSize">个人资料</div>
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                             <el-form-item label="姓名" prop="userName">
-                                <el-input placeholder="请输入姓名" size="small" v-model="addForm.userName"></el-input>
+                                <el-input placeholder="请输入姓名" size="small" v-model="editForm.userName"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                             <el-form-item label="身份证" prop="idCardNo">
-                                <el-input placeholder="请输入身份证"  size="small" v-model="addForm.idCardNo"></el-input>
+                                <el-input placeholder="请输入身份证"  size="small" v-model="editForm.idCardNo"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                             <el-form-item  label="手机号" prop="telephone">
-                                <el-input placeholder="请输入手机号"  size="small" v-model="addForm.telephone"></el-input>
+                                <el-input placeholder="请输入手机号"  size="small" v-model="editForm.telephone"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                             <el-form-item label="电话" prop="mobilePhone">
-                                <el-input placeholder="请输入电话"  size="small" v-model="addForm.mobilePhone"></el-input>
+                                <el-input placeholder="请输入电话"  size="small" v-model="editForm.mobilePhone"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-form-item class="pull-right">
-                        <el-button class="pull-left" type="primary" @click="submitForm('addForm')">提交</el-button>
+                        <el-button class="pull-left" type="primary" @click="submitForm('editForm')">提交</el-button>
                         <el-button class="pull-left" @click="cancle()">取消</el-button>
                     </el-form-item>
-            </el-col>
-        </el-row>
-         </el-form>
+                </el-col>
+            </el-row>
+        </el-form>
     </div>
 </template>
 
@@ -130,15 +122,15 @@
     import * as api from '../../common/commonApis'
     import companySelect from '../../components/selectData/CompanySelect'
     export default {
-        name: "add-user",
+        name: "edit-user",
         data() {
             return {
                 roleSelect:[],
                 deptSelect:[],
-                imageUrl:'../../../static/img/img.jpg',
-                addForm: {
+                imageUrl:'',
+                editForm: {
+                    userId:'',
                     loginName: '',
-                    password: '123456',
                     companyId: '',
                     roleId: '',
                     deptId:'',
@@ -175,21 +167,34 @@
         components: {
             companySelect
         },
-        computed:{
-
+        created(){
+            this.init()
         },
         methods: {
+            init(){
+                api.getUserById(this.$route.params.id).then(res => {
+                    if(res.status==200){
+                        this.imageUrl='http://180.76.57.168:8080'+res.data.userImage,
+                        this.editForm={
+                                userId:res.data.userId,
+                                loginName:res.data.loginName,
+                                companyId:res.data.companyId,
+                                roleId: res.data.roleId,
+                                deptId:res.data.deptId,
+                                adminType:res.data.adminType,
+                                status:res.data.status,
+                                userName:res.data.userName,
+                                idCardNo:res.data.idCardNo,
+                                telephone:res.data.telephone,
+                                mobilePhone:res.data.mobilePhone,
+                                userImage:this.imageUrl,
+                        }
+                    }
+                })
+            },
             handleAvatarSuccess(res, file) {
-                if(file.response.status==200){
-                    this.imageUrl = URL.createObjectURL(file.raw);
-                    this.addForm.userImage=file.response.data.url
-                }else {
-                    this.$message({
-                        type: 'warning',
-                        message: file.response.msg
-                    });
-                }
-
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.editForm.userImage=file.response.url
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -206,12 +211,12 @@
             //从companySelect子组件传来参数
             getCompanySelect(data) {
                 if (data.length > 0) {
-                    this.addForm.companyId = data[data.length - 1].toString();
+                    this.editForm.companyId = data[data.length - 1].toString();
                 } else {
-                    this.addForm.companyId = ''
+                    this.editForm.companyId = ''
                 }
-                this.getDeptSelect(this.addForm.companyId)
-                this.getRoleSelect(this.addForm.companyId)
+                this.getDeptSelect(this.editForm.companyId)
+                this.getRoleSelect(this.editForm.companyId)
 
             },
             //更改所属机构得到机构下的角色
@@ -231,9 +236,9 @@
             },
             setRole(data){
                 if (data.length > 0) {
-                    this.addForm.roleId  = data[data.length - 1].toString();
+                    this.editForm.roleId  = data[data.length - 1].toString();
                 } else {
-                    this.addForm.roleId = ''
+                    this.editForm.roleId = ''
                 }
             },
             //更改所属机构得到机构下的部门
@@ -253,9 +258,9 @@
             },
             setDept(data){
                 if (data.length > 0) {
-                    this.addForm.deptId = data[data.length - 1].toString();
+                    this.editForm.deptId = data[data.length - 1].toString();
                 } else {
-                    this.addForm.deptId = ''
+                    this.editForm.deptId = ''
                 }
             },
             getFocus(data){
@@ -269,7 +274,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        api.addOrUpdateUser(this.addForm).then(res => {
+                        api.addOrUpdateUser(this.editForm).then(res => {
                             if(res.status==200){
                                 this.$message({
                                     type: 'success',
@@ -295,17 +300,20 @@
 </script>
 
 <style scoped>
-.userImg {
-    width: 2.083rem;
-    height: 2.083rem;
-    border-radius: 50%;
-    border:1px dashed #ccc
-}
+    .userImg {
+        width: 2.083rem;
+        height: 2.083rem;
+        border-radius: 50%;
+        border:1px dashed #ccc
+    }
     .userImgContent {
         position: relative;
         left:50%
     }
     .clickImg {
         position: absolute;
+    }
+    .el-select{
+        display: block;
     }
 </style>

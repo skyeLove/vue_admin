@@ -26,10 +26,7 @@ export const getRoleMenuJson = params => { return axios.post('/apis/api/getRoleM
  * 公共接口 省市区
  */
 export const getProCityDis = params => { return axios.get('/apis/api/getProCityDis?'+params).then(res => res.data); };
-/**
- * 获取用户信息
- */
-export const getUserById = () => { return axios.get('/apis/api/getUserById?userId=').then(res => res.data); };
+
 /**
  * 角色列表信息
  */
@@ -49,6 +46,8 @@ export const saveOrUpdateRole = params => { return axios.post('/apis/api/saveOrU
 export const getUserList = params => { return axios.post('/apis/api/getUserList',JSON.stringify(params)).then(res => res.data); };
 
 export const delUser = params => { return axios.get('/apis/api/delUser?userId='+params).then(res => res.data); };
+
+export const getUserById = params => { return axios.get('/apis/api/getUserById?userId='+params).then(res => res.data); };
 
 export const addOrUpdateUser = params => { return axios.post('/apis/api/addOrUpdateUser',JSON.stringify(params)).then(res => res.data); };
 /**
@@ -71,3 +70,9 @@ export const addOrUpdateDept = params => { return axios.post('/apis/api/addOrUpd
 export const deleteDept = params => { return axios.post('/apis/api/deleteDept?deptId='+params).then(res => res.data); };
 
 export const getDeptById = params => { return axios.post('/apis/api/getDeptById?deptId='+params).then(res => res.data); };
+
+
+/**
+ * 菜单管理
+ */
+export const findAllMenuAndButton = params => { return axios.post('/apis/api/findAllMenuAndButton').then(res => res.data); };

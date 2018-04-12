@@ -6,9 +6,7 @@
                 <v-sidebar></v-sidebar>
             </el-col>
             <el-col :xs="20" :sm="20" :md="20" :lg="21" :xl="20"  class=" content_fiex">
-                <keep-alive>
-                    <router-view></router-view>
-                </keep-alive>
+                <router-view></router-view>
             </el-col>
         </el-row>
     </div>

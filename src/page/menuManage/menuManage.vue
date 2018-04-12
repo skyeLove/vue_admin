@@ -1,9 +1,9 @@
 <template>
     <div class="roleManageClass">
         <div class="content_title">
-            <span class="content_title_title pull-left">部门管理</span>
+            <span class="content_title_title pull-left">菜单管理</span>
             <span class="pull-right">
-               <i class="fa fa-plus" @click="add"><span>添加</span></i>
+               <!--<i class="fa fa-plus" @click="add"><span>添加</span></i>-->
           </span>
         </div>
         <div style="padding:0.625rem;">
@@ -18,7 +18,15 @@
                 :allow-drag="allowDrag">
                   <span  class="custom-tree-node" slot-scope="{ node, data }">
                       <span style="flex: 1">{{ node.label }}</span>
-                        <span class="pull-right" v-if="data.type!=1&&data.id!=0">
+                        <span class="pull-right" v-if="data.type!=2&&data.id!=0">
+                             <el-tooltip class="item" effect="dark" content="添加" placement="top">
+                                <el-button
+                                    class="fa fa-plus"
+                                    type="text"
+                                    size="mini"
+                                    @click="() => add(data)">
+                              </el-button>
+                             </el-tooltip>
                             <el-tooltip  class="item" effect="dark" content="详情" placement="top">
                                 <el-button
                                     class="fa fa-info-circle"
@@ -49,7 +57,7 @@
         </div>
 
 
-        <el-dialog :title="tempTitle+'部门'" :visible.sync="dialogFormVisible">
+        <el-dialog :title="tempTitle+'菜单'" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="Form" :model="Form" :label-width="formLabelWidth">
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -59,8 +67,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="部门名称:" prop="deptName" >
-                            <el-input placeholder="请输入部门名称" v-model="Form.deptName"></el-input>
+                        <el-form-item label="菜单名称:" prop="deptName" >
+                            <el-input placeholder="请输入菜单名称" v-model="Form.deptName"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -102,7 +110,7 @@
     import * as api from '../../common/commonApis'
     import companySelect from '../../components/selectData/CompanySelect'
     export default {
-        name:'depart-manage',
+        name:'menu-manage',
         components:{
             companySelect
         },
@@ -121,10 +129,10 @@
                 },
                 rules: {
                     companyId:[
-                        {required: true, message: '请输入所属部门', trigger: 'blur'},
+                        {required: true, message: '请输入所属菜单', trigger: 'blur'},
                     ],
                     deptName: [
-                        {required: true, message: '请输入部门名', trigger: 'blur'},
+                        {required: true, message: '请输入菜单名', trigger: 'blur'},
                     ]
                 },
                 formLabelWidth: '80px',
@@ -179,10 +187,9 @@
             },
             //获取管理列表
             getData(){
-                api.getDeptList().then(res=>{
+                api.findAllMenuAndButton().then(res=>{
                     if(res.status==200){
-                        this.dataList=[{name:'ROOT',id:0,children:[]}]
-                        this.dataList[0].children.push(res.data)
+                        this.dataList=[{name:'ROOT',id:0,children:res.data}]
                     }else {
                         this.$message({
                             type: 'warning',
@@ -195,7 +202,7 @@
                 // console.log(data);
             },
             remove(node,data){
-                this.$confirm('您确认删除部门名称为: '+data.name,' 是否继续?', '提示', {
+                this.$confirm('您确认删除菜单名称为: '+data.name,' 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'info'

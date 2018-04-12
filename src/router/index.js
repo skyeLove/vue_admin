@@ -34,6 +34,11 @@ export default new Router({
                     path: '/basic/userManage/addUser',
                     component: resolve => require(['../page/userManage/addUser.vue'], resolve)
                 },
+                {
+                    name:'edit-user',//用户编辑
+                    path: '/basic/userManage/editUser',
+                    component: resolve => require(['../page/userManage/editUser.vue'], resolve)
+                },
                  {
                     name:'organization-manage',//机构管理
                     path: '/basic/organizationManage',
@@ -43,6 +48,11 @@ export default new Router({
                     name:'depart-manage',//部门管理
                     path: '/basic/departManage',
                     component: resolve => require(['../page/departManage/departManage.vue'], resolve)
+                },
+                {
+                    name:'menu-manage',//菜单管理
+                    path: '/basic/menuManage',
+                    component: resolve => require(['../page/menuManage/menuManage.vue'], resolve)
                 },
             ]
         },

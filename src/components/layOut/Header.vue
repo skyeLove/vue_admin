@@ -2,20 +2,32 @@
     <el-container class="top-fiex">
         <el-header>
             <div class="top">
-                <span>玄武科技</span>
-                <span>热力宝综合缴费平台1.0</span>
+                <span>{{$t("xwhead.title")}}</span>
             </div>
             <div class="user-info">
-                <el-dropdown trigger="click" @command="handleCommand">
+               <div class="pull-left" style="margin-right:20px;">
+                   <el-dropdown trigger="click" @command="changeLang">
                 <span class="el-dropdown-link">
-                    <img  class="user-logo hidden-xs-only" :src="srcImg">
-                    <span class="header_name">{{username}}</span>
+                    <span class="header_name">{{lang}} <i class="el-icon-caret-bottom el-icon--right"></i></span>
                 </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
-                        <el-dropdown-item command="loginout">退出</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                       <el-dropdown-menu slot="dropdown">
+                           <el-dropdown-item command="changeCN">中文</el-dropdown-item>
+                           <el-dropdown-item command="changeEN">English</el-dropdown-item>
+                       </el-dropdown-menu>
+                   </el-dropdown>
+               </div>
+                <div class="pull-left">
+                    <el-dropdown trigger="click" @command="handleCommand">
+                        <span class="el-dropdown-link">
+                            <img  class="user-logo hidden-xs-only" :src="srcImg">
+                            <span class="header_name">{{username}}<i class="el-icon-caret-bottom el-icon--right"></i></span>
+                         </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
+                            <el-dropdown-item command="loginout">退出</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
             </div>
         </el-header>
     </el-container>
@@ -27,7 +39,8 @@
         data() {
             return {
                 username: '',
-                srcImg:''
+                srcImg:'',
+                lang:'中文'
             }
         },
         computed:{
@@ -38,9 +51,10 @@
         },
         methods:{
             getUserData(){
-                api.getUserById().then(res=>{
+                api.getUserById('').then(res=>{
                     if(res.status==200){
-                        this.username=res.data.userName
+                        this.username=res.data.userName;
+                        this.setlocalStorage('companyId',res.data.companyId)
                         this.srcImg='http://180.76.57.168:8080'+res.data.userImage
                     }else {
                         this.$message({
@@ -57,6 +71,15 @@
                 if(command == 'loginout'){
                     localStorage.removeItem('Authorization')
                     this.$router.push('/login');
+                }
+            },
+            changeLang(lang){
+                if(lang=='changeCN'){
+                    this.lang='中文'
+                    this.$i18n.locale='cn'
+                }else if(lang=='changeEN'){
+                    this.lang='English'
+                    this.$i18n.locale='en'
                 }
             }
         }

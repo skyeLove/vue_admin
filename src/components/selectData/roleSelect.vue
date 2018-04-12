@@ -27,10 +27,10 @@
         },
         methods: {
             initData(){
-                api.loadRoleTree().then(res=>{
+                api.loadRoleTree('').then(res=>{
                     if(res.status==200) {
                         res.data.forEach((value)=>{
-                            if(!value.pId){
+                            if(this.getlocalStorage('companyId')==value.id){
                                 this.roleSelect.push(value)
                                 this.forData(res.data,value)
                             }
@@ -38,17 +38,6 @@
                         return this.roleSelect
                     }
                 })
-            },
-            //过滤树接口
-            forData(object,value){
-                value.children=[]
-                object.forEach((item)=>{
-                    if(value.id==item.pId){
-                        value.children.push(item)
-                        this.forData(object,item)
-                    }
-                })
-                if(value.children.length==0)  delete value.children;
             },
             handleChange(value) {
                 this.$emit('role-select',value)

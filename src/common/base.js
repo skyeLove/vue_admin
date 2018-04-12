@@ -11,4 +11,13 @@ exports.install = function (Vue, options) {
             })
             if(value.children.length==0)  delete value.children;
     };
+    //设置slocalStorage
+    Vue.prototype.setlocalStorage = function (key,value){
+        if(value)  window.localStorage.setItem(key,value);
+    };
+    //获取localStorage
+    Vue.prototype.getlocalStorage = function (key){
+        const k=window.localStorage.getItem(key); return k
+    };
+
 };

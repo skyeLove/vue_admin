@@ -31,16 +31,7 @@
                 </el-select>
             </el-col>
             <el-col :xs="14" :sm="6" :md="6" :lg="4" :xl="4">
-                <el-cascader
-                    @focus="getFocus(roleSelect)"
-                    clearabl
-                    placeholder="请输入所属角色"
-                    size="small"
-                    change-on-select
-                    :options="roleSelect"
-                    :show-all-levels="false"
-                    :props="{label:'name',value:'id'}">
-                    </el-cascader>
+                <role-select @role-select="getRoleSelect"></role-select>
             </el-col>
             <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
                 <el-button @click="searchResult"  size="small" type="primary" icon="el-icon-search">查询</el-button>
@@ -133,10 +124,11 @@
 <script>
     import * as api from '../../common/commonApis'
     import companySelect from '../../components/selectData/CompanySelect'
+    import roleSelect from  '../../components/selectData/roleSelect'
     export default {
         name:'user-manage',
         components:{
-            companySelect
+            companySelect,roleSelect
         },
         data: function(){
             return{
@@ -166,33 +158,17 @@
             //从companySelect子组件传来参数
             getCompanySelect(data){
                 if(data.length>0){
-                    this.model.companyId=data[data.length-1].toString();
+                    this.model.roleId=data[data.length-1].toString();
                 }else {
-                    this.model.companyId=''
+                    this.model.roleId=''
                 }
-                this.getRoleSelect(this.model.companyId)
             },
             //从roleSelect子组件传来参数
             getRoleSelect(data){
-                this.roleSelect=[]
-                api.loadRoleTree(data).then(res=>{
-                    if(res.status==200) {
-                        res.data.forEach((value)=>{
-                            if(value.pId==data){
-                                this.roleSelect.push(value)
-                                this.forData(res.data,value)
-                            }
-                        })
-                        return this.roleSelect
-                    }
-                })
-            },
-             getFocus(data){
-                if(data.length==0){
-                    this.$message({
-                        type: 'warning',
-                        message: '请先选择所属机构！'
-                    });
+                if(data.length>0){
+                    this.model.companyId=data[data.length-1].toString();
+                }else {
+                    this.model.companyId=''
                 }
             },
             //获取用户 管理列表
@@ -266,6 +242,7 @@
             //编辑角色
             eidtClick(data){
                 console.log(data);
+                this.$router.push({name:'edit-user',params:{id:data.userId}})
             },
             //复选框改变是调用函数
             handleSelectionChange(val) {
