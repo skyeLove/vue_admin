@@ -31,9 +31,9 @@
 </template>
 
 <script>
-    import * as api from '../../common/commonApis'
-    import companyTree from '../../components/selectData/CompanySelect'
-    import menuTree from '../../components/TreeData/menuTree'
+    import * as api from '../../../common/commonApis'
+    import companyTree from '../../../components/selectData/CompanySelect'
+    import menuTree from '../../../components/TreeData/menuTree'
     export default {
         name: "add-role",
         data(){

@@ -99,8 +99,8 @@
     </div>
 </template>
 <script>
-    import * as api from '../../common/commonApis'
-    import companySelect from '../../components/selectData/CompanySelect'
+    import * as api from '../../../common/commonApis'
+    import companySelect from '../../../components/selectData/CompanySelect'
     export default {
         name:'depart-manage',
         components:{

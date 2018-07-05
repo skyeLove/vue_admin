@@ -127,8 +127,8 @@
 </template>
 
 <script>
-    import * as api from '../../common/commonApis'
-    import companySelect from '../../components/selectData/CompanySelect'
+    import * as api from '../../../common/commonApis'
+    import companySelect from '../../../components/selectData/CompanySelect'
     export default {
         name: "add-user",
         data() {
@@ -216,8 +216,8 @@
             },
             //更改所属机构得到机构下的角色
             getRoleSelect(data) {
-                this.roleSelect=[]
                 api.loadRoleTree(data).then(res=>{
+                    this.roleSelect=[]
                     if(res.status==200) {
                         res.data.forEach((value)=>{
                             if(value.pId==data){
@@ -238,8 +238,8 @@
             },
             //更改所属机构得到机构下的部门
             getDeptSelect(data){
-                this.deptSelect=[]
                 api.loadDeptTree(data).then(res=>{
+                    this.deptSelect=[]
                     if(res.status==200) {
                         res.data.forEach(value=>{
                             if(value.pId==data){
@@ -259,10 +259,15 @@
                 }
             },
             getFocus(data){
-                if(data.length==0){
+                if(!this.addForm.companyId){
                     this.$message({
                         type: 'warning',
                         message: '请先选择所属机构！'
+                    });
+                }else if(data.length==0){
+                    this.$message({
+                        type: 'warning',
+                        message: '此机构下无数据！'
                     });
                 }
             },

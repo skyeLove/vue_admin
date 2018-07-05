@@ -3,7 +3,6 @@
         <div class="content_title">
             <span class="content_title_title pull-left">菜单管理</span>
             <span class="pull-right">
-               <!--<i class="fa fa-plus" @click="add"><span>添加</span></i>-->
           </span>
         </div>
         <div style="padding:0.625rem;">
@@ -14,12 +13,11 @@
                 :props="defaultProps"
                 @node-drag-end="handleDragEnd"
                 draggable
-                :allow-drop="allowDrop"
                 :allow-drag="allowDrag">
                   <span  class="custom-tree-node" slot-scope="{ node, data }">
                       <span style="flex: 1">{{ node.label }}</span>
-                        <span class="pull-right" v-if="data.type!=2&&data.id!=0">
-                             <el-tooltip class="item" effect="dark" content="添加" placement="top">
+                        <span class="pull-right" >
+                             <el-tooltip v-if="data.type!=2" class="item" effect="dark" content="添加" placement="top">
                                 <el-button
                                     class="fa fa-plus"
                                     type="text"
@@ -27,7 +25,7 @@
                                     @click="() => add(data)">
                               </el-button>
                              </el-tooltip>
-                            <el-tooltip  class="item" effect="dark" content="详情" placement="top">
+                            <el-tooltip v-if="data.menuId!=''" class="item" effect="dark" content="详情" placement="top">
                                 <el-button
                                     class="fa fa-info-circle"
                                     type="text"
@@ -35,7 +33,7 @@
                                     @click="() => detail(data)">
                                     </el-button>
                             </el-tooltip>
-                              <el-tooltip  class="item" effect="dark" content="编辑" placement="top">
+                              <el-tooltip v-if="data.menuId!=''" class="item" effect="dark" content="编辑" placement="top">
                                 <el-button
                                     class="fa fa-pencil"
                                     type="text"
@@ -43,7 +41,7 @@
                                     @click="() => edit(data)">
                                 </el-button>
                             </el-tooltip>
-                            <el-tooltip   class="item" effect="dark" content="删除" placement="top">
+                            <el-tooltip v-if="data.menuId!=''"  class="item" effect="dark" content="删除" placement="top">
                                  <el-button
                                      class="fa fa-trash-o"
                                      type="text"
@@ -61,37 +59,58 @@
             <el-form :rules="rules" ref="Form" :model="Form" :label-width="formLabelWidth">
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="所属机构:" prop="companyId">
-                            <company-select :companyModel="Form.companyId"  @company-select="getCompanySelect">
-                            </company-select>
+                        <el-form-item label="类型:" prop="type">
+                            <el-select  v-model="Form.type" clearable  placeholder="请选择类型">
+                                <el-option
+                                    :key="1"
+                                    label="菜单"
+                                    :value="1">
+                                </el-option>
+                                <el-option
+                                    :key="2"
+                                    label="按钮"
+                                    :value="2">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="菜单名称:" prop="deptName" >
-                            <el-input placeholder="请输入菜单名称" v-model="Form.deptName"></el-input>
+                        <el-form-item label="菜单名称:" prop="menuName" >
+                            <el-input placeholder="请输入菜单名称" v-model="Form.menuName"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="联系人:" >
-                            <el-input placeholder="请输入联系人" v-model="Form.linkman"></el-input>
+                        <el-form-item label="请求的url:" >
+                            <el-input placeholder="请输入url" v-model="Form.url"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="自定义编码:">
-                            <el-input placeholder="请输入自定义编码" v-model="Form.deptCode"></el-input>
+                        <el-form-item label="图标:">
+                            <el-input placeholder="请输入图标样式" v-model="Form.icon"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" >
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="手机号码:">
-                            <el-input placeholder="请输入手机号码" v-model="Form.telephone"></el-input>
+                        <el-form-item label="状态:" prop="status">
+                            <el-select  v-model="Form.status" clearable  placeholder="请选择状态">
+                                <el-option
+                                    :key="1"
+                                    label="有效"
+                                    :value="1">
+                                </el-option>
+                                <el-option
+                                    :key="2"
+                                    label="无效"
+                                    :value="2">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-                        <el-form-item label="备注:" prop="name">
+                        <el-form-item label="备注:" >
                             <el-input v-model="Form.remark"></el-input>
                         </el-form-item>
                     </el-col>
@@ -107,8 +126,8 @@
     </div>
 </template>
 <script>
-    import * as api from '../../common/commonApis'
-    import companySelect from '../../components/selectData/CompanySelect'
+    import * as api from '../../../common/commonApis'
+    import companySelect from '../../../components/selectData/CompanySelect'
     export default {
         name:'menu-manage',
         components:{
@@ -119,20 +138,23 @@
                 dataList:[],
                 tempTitle:'',//1是添加title  2是编辑title
                 Form: {
-                    companyId: '',
-                    remark: '',
-                    linkman:'',
-                    deptCode:'',
-                    deptName:'',
-                    telephone:'',
-                    status:"1"
+                    type: 1,
+                    menuName: '',
+                    url:'',
+                    icon:'',
+                    status:1,
+                    remark:'',
+                    parentId:''
                 },
                 rules: {
-                    companyId:[
-                        {required: true, message: '请输入所属菜单', trigger: 'blur'},
+                    type:[
+                        {required: true, message: '请选择菜单类型', trigger: 'blur'},
                     ],
-                    deptName: [
+                    menuName: [
                         {required: true, message: '请输入菜单名', trigger: 'blur'},
+                    ],
+                    status: [
+                        {required: true, message: '请输选择菜单状态', trigger: 'blur'},
                     ]
                 },
                 formLabelWidth: '80px',
@@ -148,27 +170,15 @@
             this.getData();
         },
         methods: {
-            //从companySelect子组件传来参数
-            getCompanySelect(data){
-                if(data.length>0){
-                    this.Form.companyId==data[data.length-1].toString();
-                }else {
-                    this.Form.companyId=''
-                }
-            },
-            allowDrop(draggingNode,dropNode){
-                return dropNode.data.type!=2
-            },
             allowDrag(draggingNode){
-                return draggingNode.data.type!=1
+                return draggingNode.data.type!=2
             },
             handleDragEnd(draggingNode, dropNode, dropType, ev) {
                 if(draggingNode&&dropNode){
                     if(dropNode.data.id!==draggingNode.data.id){
                         this.Form={}
-                        this.Form.deptId=draggingNode.data.id;
-                        this.Form.companyId=dropNode.data.id;
-                        api.addOrUpdateDept(this.Form).then(res => {
+                        this.Form.parentId=dropNode.data.id;
+                        api.saveOrUpdateMenu(this.Form).then(res => {
                             if(res.status==200){
                                 this.$message({
                                     type: 'success',
@@ -189,7 +199,7 @@
             getData(){
                 api.findAllMenuAndButton().then(res=>{
                     if(res.status==200){
-                        this.dataList=[{name:'ROOT',id:0,children:res.data}]
+                        this.dataList=[{name:'ROOT',menuId:'',children:res.data}]
                     }else {
                         this.$message({
                             type: 'warning',
@@ -207,7 +217,7 @@
                     cancelButtonText: '取消',
                     type: 'info'
                 }).then(() => {
-                    api.deleteDept(data.id).then(res=>{
+                    api.deleteMenu(data.menuId).then(res=>{
                         if(res.status==200){
                             this.$message({
                                 type: 'success',
@@ -223,17 +233,18 @@
                     })
                 })
             },
-            add(){
+            add(data){
                 //清空数据 展开弹框
                 this.Form={}
                 //赋值弹框为添加
                 this.tempTitle='添加'
                 this.dialogFormVisible=true;
+                this.Form.parentId=data.menuId;
             },
             commitData(form){
                 this.$refs[form].validate((valid) => {
                     if (valid) {
-                        api.addOrUpdateDept(this.Form).then(res => {
+                        api.saveOrUpdateMenu(this.Form).then(res => {
                             if(res.status==200){
                                 this.$message({
                                     type: 'success',
@@ -253,23 +264,23 @@
             },
             //编辑
             edit(data){
+                console.log(data);
                 this.Form={}
                 //赋值弹框为编辑
                 this.tempTitle='编辑'
-                api.getDeptById(data.id).then(res => {
+                api.getMenuOrButtonById(data.menuId).then(res => {
                     if(res.status==200){
                         this.dialogFormVisible=true;
                         this.Form={
-                            companyId:res.data.companyId,
-                            remark: res.data.remark,
-                            linkman:res.data.linkman,
-                            deptCode:res.data.deptCode,
-                            deptName:res.data.deptName,
-                            telephone:res.data.telephone,
-                            deptId:res.data.deptId,
-                            status:"1"
+                            type:res.data.type,
+                            menuName:res.data.menuName,
+                            url:res.data.url,
+                            icon:res.data.icon,
+                            status:res.data.status,
+                            remark:res.data.remark,
+                            parentId:res.data.parentId,
+                            menuId:res.data.menuId
                         }
-                        console.log(this.Form.companyId);
                     }else {
                         this.$message({
                             type: 'warning',

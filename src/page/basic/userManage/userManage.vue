@@ -38,11 +38,14 @@
             </el-col>
         </el-row>
         <el-table
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.8)"
             style="width: 100%"
             stripe
-            :default-sort = "{prop: 'createUser', order: 'descending'}"
+            :default-sort = "{prop: 'createDate', order: 'descending'}"
             :data="userDatas "
-            tooltip-effect="dark"
             @selection-change="handleSelectionChange">
             <el-table-column
                 type="selection"
@@ -101,6 +104,7 @@
             </el-table-column>
             <el-table-column
                 sortable
+                prop="createDate"
                 label="最后登录时间"
                 show-overflow-tooltip>
                 <template slot-scope="scope">
@@ -122,9 +126,9 @@
     </div>
 </template>
 <script>
-    import * as api from '../../common/commonApis'
-    import companySelect from '../../components/selectData/CompanySelect'
-    import roleSelect from  '../../components/selectData/roleSelect'
+    import * as api from '../../../common/commonApis'
+    import companySelect from '../../../components/selectData/CompanySelect'
+    import roleSelect from '../../../components/selectData/roleSelect'
     export default {
         name:'user-manage',
         components:{
@@ -134,6 +138,7 @@
             return{
                 userDatas:[],
                 roleSelect:[],
+                loading:false,
                 options:[{value: '1',
                     label: '启用'},
                     {value: '0',
@@ -158,26 +163,29 @@
             //从companySelect子组件传来参数
             getCompanySelect(data){
                 if(data.length>0){
-                    this.model.roleId=data[data.length-1].toString();
-                }else {
-                    this.model.roleId=''
-                }
-            },
-            //从roleSelect子组件传来参数
-            getRoleSelect(data){
-                if(data.length>0){
                     this.model.companyId=data[data.length-1].toString();
                 }else {
                     this.model.companyId=''
                 }
             },
+            //从roleSelect子组件传来参数
+            getRoleSelect(data){
+                if(data.length>0){
+                    this.model.roleId=data[data.length-1].toString();
+                }else {
+                    this.model.roleId=''
+                }
+            },
             //获取用户 管理列表
             getUserData(){
                 api.getUserList(this.model).then(res=>{
+                    this.loading=true;
                     if(res.status==200) {
+                        this.loading=false;
                         this.totalNumber=res.data.total;
                         return this.userDatas=res.data.list;
                     }else {
+                        this.loading=false;
                         this.$message({
                             type: 'warning',
                             message:res.msg

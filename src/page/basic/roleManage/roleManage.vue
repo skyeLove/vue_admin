@@ -63,6 +63,7 @@
           <el-table-column
               sortable
               label="创建时间"
+              prop="createDate"
               show-overflow-tooltip>
               <template slot-scope="scope">
               <span>{{ scope.row.createDate |dateFormat }}</span>
@@ -71,6 +72,7 @@
           <el-table-column
               sortable
               label="修改时间"
+              prop="updateDate"
               show-overflow-tooltip>
               <template slot-scope="scope">
                   <span>{{ scope.row.updateDate |dateFormat }}</span>
@@ -91,8 +93,8 @@
   </div>
 </template>
 <script>
-    import * as api from '../../common/commonApis'
-    import companyTree from '../../components/selectData/CompanySelect'
+    import * as api from '../../../common/commonApis'
+    import companyTree from '../../../components/selectData/CompanySelect'
     export default {
         name:'role-manage',
         components:{

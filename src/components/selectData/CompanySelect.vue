@@ -30,7 +30,7 @@
         },
         watch:{
             companyModel(val){
-
+                console.log(val);
             }
         },
         methods: {

@@ -37,8 +37,15 @@
                             {menuId:'02', menuName:'用户管理',model:'/basic/userManage'},
                             {menuId:'03', menuName:'机构管理',model:'/basic/organizationManage'},
                             {menuId:'04', menuName:'部门管理',model:'/basic/departManage'},
-                            {menuId:'05', menuName:'菜单管理',model:'/basic/menuManage'}
-                            ]}
+                            {menuId:'05', menuName:'菜单管理',model:'/basic/menuManage'},
+                            {menuId:'06', menuName:'换热站管理',model:'/basic/heatTransferManage'},
+                            {menuId:'07', menuName:'小区管理',model:'/basic/communityManage'},
+                            {menuId:'08', menuName:'日志管理',model:'/basic/logManage'},
+                            ]},
+                    {menuId:'1', menuName:'热费查缴',model:'pay.pay',icon:'fa fa-align-justify',
+                        children:[{menuId:'11', menuName:'标准缴费',model:'/pay/payManage'}
+
+                        ]}
                 ]
             }
         },

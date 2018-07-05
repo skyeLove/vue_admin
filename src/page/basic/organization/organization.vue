@@ -152,7 +152,7 @@
     </div>
 </template>
 <script>
-    import * as api from '../../common/commonApis'
+    import * as api from '../../../common/commonApis'
     export default {
         name:'organization-manage',
         components:{

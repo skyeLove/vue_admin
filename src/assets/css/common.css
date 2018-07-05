@@ -149,6 +149,9 @@ i.edit{
 .el-form-item__label{
     font-size: 0.375rem;
 }
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+    width: 100%;
+}
 /*公共样式红星*/
 .star{
     color: #FF0000;
