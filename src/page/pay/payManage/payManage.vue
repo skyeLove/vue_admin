@@ -49,7 +49,8 @@
                 })
            },
            searchResult(){
-               this.getData()
+               // this.getData()
+               location.href="/files/file/template/roomInfoTemplate.xlsx";
            },
            //分页调用
            handleSizeChange(val){

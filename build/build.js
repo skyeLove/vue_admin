@@ -32,6 +32,21 @@ webpack(webpackConfig, function (err, stats) {
     chunkModules: false
   }) + '\n\n')
 
+
+    var express = require('express')
+    var proxyMiddleware = require('http-proxy-middleware')
+    var app = express()
+    var proxyTable = config.dev.proxyTable
+    // proxy api requests
+    Object.keys(proxyTable).forEach(function (context) {
+        var options = proxyTable[context]
+        if (typeof options === 'string') {
+            options = { target: options }
+        }
+        app.use(proxyMiddleware(options.filter || context, options))
+    })
+
+
   console.log(chalk.cyan('  Build complete.\n'))
   console.log(chalk.yellow(
     '  Tip: built files are meant to be served over an HTTP server.\n' +

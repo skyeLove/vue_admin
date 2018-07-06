@@ -15,6 +15,22 @@ module.exports = {
         // npm install --save-dev compression-webpack-plugin
         productionGzip: false,
         productionGzipExtensions: ['js', 'css'],
+        proxyTable: {
+            '/apis': {
+                target: 'http://111.40.94.148:8767',  // 接口域名111.40.94.148:8767;/180.76.178.208
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                    '^/apis': '', //需要rewrite重写的,
+                }
+            },
+            '/files': {
+                target: 'http://180.76.178.208:8080',  // 接口域名111.40.94.148:8767;/180.76.178.208
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                    '^/files': '', //需要rewrite重写的,
+                }
+            }
+        },
         // Run the build command with an extra argument to
         // View the bundle analyzer report after build finishes:
         // `npm run build --report`
@@ -29,10 +45,17 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/apis': {
-                target: '',  // 接口域名111.40.94.148:8767;/180.76.178.208
+                target: 'http://111.40.94.148:8767',  // 接口域名111.40.94.148:8767;/180.76.178.208
                 changeOrigin: true,  //是否跨域
                 pathRewrite: {
-                    '^/apis': ''   //需要rewrite重写的,
+                    '^/apis': '', //需要rewrite重写的,
+                }
+            },
+            '/files': {
+                target: 'http://180.76.178.208:8080',  // 接口域名111.40.94.148:8767;/180.76.178.208
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                    '^/files': '', //需要rewrite重写的,
                 }
             }
         },
